@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌽 Especialista em Pamonha 🌽</title>
+    <style>
+      /* ARQUIVO: index.html (dentro da tag <style>) */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        /* Fundo suave com cores de Milho e Palha */
+        background: linear-gradient(135deg, #f7f3e8, #ffeeb3);
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 900px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 85vh;
+      }
+
+      .header {
+        /* Cor de Milho Doce / Goiabada */
+        background: linear-gradient(to right, #6a0000, #f0c330);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        border-bottom: 3px solid #6a0000;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+        color: white;
+      }
+
+      .header p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      /* ALTERADO: Classe e Conteúdo para Pamonha */
+      .pamonha-logo {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2rem;
+        color: #fce440;
+      }
+
+      /* Removida a classe .python-logo para evitar confusão */
+
+      .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .api-key-section {
+        padding: 20px;
+        background-color: #f7f3e8; /* Cor de Palha */
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .api-key-input {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .api-key-input:focus {
+        outline: none;
+        border-color: #f0c330; /* Amarelo Milho */
+        box-shadow: 0 0 0 3px rgba(240, 195, 48, 0.2);
+      }
+
+      .btn {
+        /* Botão com cores de Milho */
+        padding: 12px 20px;
+        background: linear-gradient(to right, #f0c330, #6a0000);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .btn:hover {
+        background: linear-gradient(to right, #ddb22d, #5a0000);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-box {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background-color: #fcfcfc; /* Fundo do chat quase branco */
+      }
+
+      .message {
+        max-width: 80%;
+        padding: 12px 18px;
+        border-radius: 18px;
+        line-height: 1.5;
+        position: relative;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      /* --- MENSAGENS --- */
+
+      .user-message {
+        align-self: flex-end;
+        /* Verde Folha de Milho */
+        background: linear-gradient(to right, #215c30, #5cb85c);
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+
+      .bot-message {
+        align-self: flex-start;
+        background-color: #ffeeb3; /* Creme de Milho Suave */
+        color: #333;
+        border: 1px solid #f0c330; /* Borda Amarela */
+        border-bottom-left-radius: 5px;
+      }
+
+      .warning-message {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .input-section {
+        padding: 20px;
+        background-color: white;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        gap: 10px;
+        height: auto;
+      }
+
+      .message-input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 25px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .message-input:focus {
+        outline: none;
+        border-color: #f0c330;
+        box-shadow: 0 0 0 3px rgba(240, 195, 48, 0.2);
+      }
+
+      .send-btn {
+        /* Botão de Envio */
+        padding: 12px 20px;
+        background: linear-gradient(to right, #f0c330, #6a0000);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .send-btn:hover {
+        background: linear-gradient(to right, #ddb22d, #5a0000);
+        transform: translateY(-2px);
+      }
+
+      .send-btn:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .typing-dot {
+        /* Cor do indicador de digitação */
+        background-color: #f0c330;
+      }
+
+      .info-section {
+        padding: 15px 20px;
+        background-color: #e6ffec; /* Verde Folha de Milho Suave */
+        border-top: 1px solid #d4edda;
+        font-size: 0.85rem;
+        color: #155724;
+        text-align: center;
+      }
+
+      .info-section a {
+        color: #0c3e17;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .code-block {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      /* Mantendo media queries originais */
+      @media (max-width: 768px) {
+        .container {
+          height: 95vh;
+        }
+        .message {
+          max-width: 90%;
+        }
+        .header h1 {
+          font-size: 1.5rem;
+        }
+        .pamonha-logo {
+          font-size: 1.5rem;
+          top: 18px;
+        }
+        .api-key-form {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🌽 Especialista em Pamonha 🌽</h1>
+        <p>Tudo o que você precisa saber sobre a rainha da culinária brasileira</p>
+        <div class="pamonha-logo">🌽</div>
+      </div>
+
+      <div class="chat-container">
+        <div class="api-key-section">
+          <div class="api-selector">
+            <label for="apiProvider">Selecione a API:</label>
+            <select id="apiProvider">
+              <option value="gemini">
+                Google Gemini (Recomendado - Gratuito)
+              </option>
+              <option value="deepseek">
+                DeepSeek (Pode Requerer Pagamento)
+              </option>
+            </select>
+          </div>
+          <div class="api-key-form">
+            <input
+              type="password"
+              class="api-key-input"
+              placeholder="Digite sua chave da API..."
+              id="apiKey"
+            />
+            <button class="btn" id="saveApiKey">Salvar Chave</button>
+          </div>
+          <div class="api-info" id="apiInfo">
+            Para Google Gemini: Obtenha uma chave gratuita em
+            <a href="https://aistudio.google.com/app/apikey" target="_blank"
+              >Google AI Studio</a
+            >
+          </div>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+          <div class="message bot-message">
+            Olá! Sou o especialista em Pamonha. Por favor, insira sua chave da
+            API para começarmos. Pergunte-me sobre receitas, história,
+            ingredientes ou curiosidades da nossa rainha do milho!
+          </div>
+        </div>
+
+        <div class="input-section">
+          <input
+            type="text"
+            class="message-input"
+            placeholder="Pergunte-me algo sobre Pamonha..."
+            id="messageInput"
+            disabled
+          />
+          <button class="send-btn" id="sendMessage" disabled>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 2L11 13"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M22 2L15 22L11 13L2 9L22 2Z"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="info-section">
+          <strong>Google Gemini:</strong> Obtenha uma chave gratuita em
+          <a href="https://aistudio.google.com/app/apikey" target="_blank"
+            >Google AI Studio</a
+          >
+          | <strong>DeepSeek:</strong>
+          <a href="https://platform.deepseek.com/api_keys" target="_blank"
+            >DeepSeek Platform</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const apiProviderSelect = document.getElementById("apiProvider");
+        const apiKeyInput = document.getElementById("apiKey");
+        const apiInfo = document.getElementById("apiInfo");
+        const saveApiKeyBtn = document.getElementById("saveApiKey");
+        const messageInput = document.getElementById("messageInput");
+        const sendMessageBtn = document.getElementById("sendMessage");
+        const chatBox = document.getElementById("chatBox");
+
+        let apiKey = "";
+        let apiProvider = "gemini";
+        let isProcessing = false;
+
+        // Atualizar informações da API quando o provedor mudar
+        apiProviderSelect.addEventListener("change", function () {
+          apiProvider = this.value;
+          updateApiInfo();
+        });
+
+        function updateApiInfo() {
+          if (apiProvider === "gemini") {
+            apiInfo.innerHTML =
+              'Para Google Gemini: Obtenha uma chave gratuita em <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>';
+            apiKeyInput.placeholder = "Digite sua chave do Google Gemini...";
+          } else {
+            apiInfo.innerHTML =
+              'Para DeepSeek: Obtenha uma chave em <a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek Platform</a> (pode requerer pagamento)';
+            apiKeyInput.placeholder = "Digite sua chave do DeepSeek...";
+          }
+        }
+
+        // Inicializar informações da API
+        updateApiInfo();
+
+        // Salvar a chave da API
+        saveApiKeyBtn.addEventListener("click", function () {
+          apiKey = apiKeyInput.value.trim();
+
+          if (!apiKey) {
+            addMessage("Por favor, digite uma chave da API válida.", "warning");
+            return;
+          }
+
+          // Esconder a chave na interface
+          apiKeyInput.type = "password";
+          apiKeyInput.value = "••••••••••••••••";
+          apiKeyInput.disabled = true;
+          saveApiKeyBtn.disabled = true;
+          apiProviderSelect.disabled = true;
+
+          // Ativar campos de mensagem
+          messageInput.disabled = false;
+          sendMessageBtn.disabled = false;
+
+          // ALTERADO: Mensagem de sucesso para Pamonha
+          addMessage(
+            `Chave da API ${
+              apiProvider === "gemini" ? "Google Gemini" : "DeepSeek"
+            } salva com sucesso! Agora você pode fazer suas perguntas sobre Pamonha.`,
+            "bot"
+          );
+          messageInput.focus();
+        });
+
+        // Enviar mensagem ao clicar no botão
+        sendMessageBtn.addEventListener("click", sendMessage);
+
+        // Enviar mensagem ao pressionar Enter
+        messageInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && !isProcessing) {
+            sendMessage();
+          }
+        });
+
+        async function sendMessage() {
+          const message = messageInput.value.trim();
+
+          if (!message || isProcessing) return;
+
+          // Verificar se a pergunta é sobre Pamonha
+          if (!isPamonhaRelated(message)) {
+            // ALTERADO: Resposta para perguntas fora do tema Pamonha
+            addMessage(
+              "Minha especialidade é Pamonha! Por favor, faça apenas perguntas sobre receitas, história ou ingredientes da Pamonha. Nada de Python por aqui!",
+              "warning"
+            );
+            messageInput.value = "";
+            return;
+          }
+
+          // Adicionar mensagem do usuário ao chat
+          addMessage(message, "user");
+          messageInput.value = "";
+
+          // Mostrar indicador de digitação
+          showTypingIndicator();
+
+          // Processar a pergunta
+          await processQuestion(message);
+        }
+
+        async function processQuestion(question) {
+          isProcessing = true;
+          sendMessageBtn.disabled = true;
+
+          try {
+            let response;
+
+            if (apiProvider === "gemini") {
+              response = await callGeminiAPI(question);
+            } else {
+              response = await callDeepSeekAPI(question);
+            }
+
+            // Remover indicador de digitação
+            removeTypingIndicator();
+
+            // Exibir a resposta
+            addMessage(response, "bot");
+          } catch (error) {
+            console.error("Erro ao processar a pergunta:", error);
+            removeTypingIndicator();
+
+            let errorMessage = "Desculpe, ocorreu um erro ao processar sua pergunta. ";
+
+            if (error.message.includes("402")) {
+              errorMessage +=
+                "A API selecionada requer pagamento. Por favor, use o Google Gemini que tem um plano gratuito.";
+            } else if (error.message.includes("401")) {
+              errorMessage +=
+                "Chave da API inválida ou não autorizada. Verifique sua chave e tente novamente.";
+            } else if (error.message.includes("429")) {
+              errorMessage +=
+                "Limite de requisições excedido. Tente novamente mais tarde.";
+            } else if (error.message.includes("500")) {
+              errorMessage +=
+                "Erro interno do servidor. Tente novamente em alguns instantes.";
+            } else {
+              errorMessage += `Detalhes: ${error.message}`;
+            }
+
+            addMessage(errorMessage, "error");
+          } finally {
+            isProcessing = false;
+            sendMessageBtn.disabled = false;
+          }
+        }
+
+        // ALTERADO: PROMPT DE SISTEMA para Pamonha
+        const PAMONHA_SYSTEM_PROMPT = `
+          Você é um chatbot especializado e entusiasta da culinária brasileira, 
+          focado exclusivamente no prato Pamonha. Responda a todas as perguntas 
+          com informações detalhadas e amigáveis sobre a pamonha (doce, salgada, 
+          receitas, história, ingredientes, e curiosidades regionais).
+          Mantenha o tom sempre alegre e acolhedor.
+          Se a pergunta do usuário não for sobre Pamonha, você deve responder 
+          educadamente (em português) que seu conhecimento é limitado apenas a Pamonha 
+          e convidá-lo a perguntar algo sobre o tema.
+        `;
+        // FIM DA ALTERAÇÃO DO PROMPT
+
+        async function callGeminiAPI(question) {
+          // Usando a API do Google Gemini
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      // ALTERADO: Uso do novo prompt de sistema de Pamonha
+                      text: `${PAMONHA_SYSTEM_PROMPT}\n\nPergunta do usuário: ${question}`,
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 1000,
+              },
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(
+              `Erro na API: ${response.status} - ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          if (data.candidates && data.candidates.length > 0) {
+            return data.candidates[0].content.parts[0].text;
+          } else {
+            throw new Error("Resposta da API não contém dados válidos");
+          }
+        }
+
+        async function callDeepSeekAPI(question) {
+          // Tentativa com a API DeepSeek (pode retornar erro 402)
+          const response = await fetch(
+            "https://api.deepseek.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`,
+              },
+              body: JSON.stringify({
+                model: "deepseek-chat",
+                messages: [
+                  {
+                    role: "system",
+                    // ALTERADO: Uso do novo prompt de sistema de Pamonha
+                    content: PAMONHA_SYSTEM_PROMPT,
+                  },
+                  {
+                    role: "user",
+                    content: question,
+                  },
+                ],
+                max_tokens: 1000,
+                temperature: 0.7,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(
+              `Erro na API: ${response.status} - ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          if (data.choices && data.choices.length > 0) {
+            return data.choices[0].message.content;
+          } else {
+            throw new Error("Resposta da API não contém dados válidos");
+          }
+        }
+
+        // ALTERADO: Função de filtro para Pamonha
+        function isPamonhaRelated(message) {
+          const pamonhaKeywords = [
+            "pamonha",
+            "milho",
+            "massa",
+            "palha",
+            "doce",
+            "salgada",
+            "queijo",
+            "goiabada",
+            "receita",
+            "cozinhar",
+            "ingredientes",
+            "como fazer",
+            "história",
+            "curiosidade",
+            "culinária",
+            "festa junina",
+            "nordeste",
+            "goiás",
+            "minas",
+            "mandioca", // Palavra relacionada a milho/festa junina (para flexibilizar um pouco)
+          ];
+
+          const lowerMessage = message.toLowerCase();
+
+          // Verificar se a mensagem contém palavras-chave relacionadas a Pamonha
+          return pamonhaKeywords.some((keyword) =>
+            lowerMessage.includes(keyword.toLowerCase())
+          );
+        }
+        // FIM DA ALTERAÇÃO DA FUNÇÃO DE FILTRO
+
+        function addMessage(text, sender) {
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("message");
+
+          if (sender === "user") {
+            messageDiv.classList.add("user-message");
+            messageDiv.textContent = text;
+          } else if (sender === "bot") {
+            messageDiv.classList.add("bot-message");
+
+            // Processar a resposta para formatar blocos de código
+            const formattedText = formatCodeBlocks(text);
+            messageDiv.innerHTML = formattedText;
+          } else if (sender === "warning") {
+            messageDiv.classList.add("warning-message");
+            messageDiv.textContent = text;
+          } else if (sender === "error") {
+            messageDiv.classList.add("error-message");
+            messageDiv.textContent = text;
+          }
+
+          chatBox.appendChild(messageDiv);
+
+          // Rolagem automática para a última mensagem
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function formatCodeBlocks(text) {
+          // Substituir blocos de código marcados com ``` por elementos pre/code
+          return text.replace(
+            /```(\w+)?\n([\s\S]*?)```/g,
+            function (match, language, code) {
+              return `<div class="code-block"><pre><code>${code.trim()}</code></pre></div>`;
+            }
+          );
+        }
+
+        function showTypingIndicator() {
+          const typingDiv = document.createElement("div");
+          typingDiv.classList.add("typing-indicator");
+          typingDiv.id = "typingIndicator";
+
+          const dotsDiv = document.createElement("div");
+          dotsDiv.classList.add("typing-dots");
+
+          for (let i = 0; i < 3; i++) {
+            const dot = document.createElement("div");
+            dot.classList.add("typing-dot");
+            dotsDiv.appendChild(dot);
+          }
+
+          typingDiv.appendChild(dotsDiv);
+          chatBox.appendChild(typingDiv);
+
+          // Rolagem automática para o indicador de digitação
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+          const typingIndicator = document.getElementById("typingIndicator");
+          if (typingIndicator) {
+            typingIndicator.remove();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
